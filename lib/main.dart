@@ -9,13 +9,16 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      theme: ThemeData.light(),
+      theme: ThemeData(
+        brightness: Brightness.light,
+        primarySwatch: Colors.deepOrange,
+        accentColor: Colors.deepPurple
+      ),
       home: Scaffold(
         appBar: AppBar(
-          title: Text('GpList'),
-          backgroundColor: Colors.pink,
+          title: Text('GpList')
         ),
-        body: ProductManager('Gugu Tester')
+        body: ProductManager(startingProduct: 'Gp Tester')
       ),
     );
   }
