@@ -109,10 +109,18 @@ class _ProductCreatePageState extends State<ProductCreatePage> {
           ),
           RaisedButton(
             child: Text('Save'),
-            color: Theme.of(context).accentColor,
             textColor: Colors.white,
             onPressed: _submitForm,
           )
+//          GestureDetector(
+//            onDoubleTap: () => _submitForm(),
+//            child:  Container(
+//              color: Colors.green,
+//              padding: EdgeInsets.all(5.0),
+//              child: Text('Click Me'),
+//            ),
+//          ),
+
         ],
       ),
     );
