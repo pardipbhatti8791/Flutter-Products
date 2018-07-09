@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import './product_create.dart';
-import './product_list.dart';
+import 'package:firstapp/pages/tabsControls/product_create.dart';
+import 'package:firstapp/pages/tabsControls/product_list.dart';
 
 class ProductsAdminPage extends StatelessWidget {
   final Function addProduct;
@@ -23,9 +23,10 @@ class ProductsAdminPage extends StatelessWidget {
                 title: Text('Choose'),
               ),
               ListTile(
+                leading: Icon(Icons.list),
                 title: Text('All Products'),
                 onTap: () {
-                  Navigator.pushReplacementNamed(context, '/');
+                  Navigator.pushReplacementNamed(context, '/products');
                 },
               )
             ],
