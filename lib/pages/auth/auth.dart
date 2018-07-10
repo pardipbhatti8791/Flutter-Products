@@ -13,6 +13,7 @@ class AuthPageState extends State<AuthPage> {
   String _email;
   String _password;
   bool _acceptTerms = false;
+  final GlobalKey<FormState> _GpKey = GlobalKey<FormState>();
 
   DecorationImage _buildBackgroundImage() {
     return DecorationImage(
@@ -24,25 +25,40 @@ class AuthPageState extends State<AuthPage> {
   }
 
   Widget _buildEmailTextField() {
-    return TextField(
+    return TextFormField(
       decoration: InputDecoration(
-          labelText: 'Email', filled: true, fillColor: Colors.white),
-      onChanged: (String value) {
-        setState(() {
-          _email = value;
-        });
+        labelText: 'Email',
+        filled: true,
+        fillColor: Colors.white,
+      ),
+      keyboardType: TextInputType.emailAddress,
+      validator: (String value) {
+        if (value.isEmpty ||
+            !RegExp(r"^[a-zA-Z0-9.]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
+                .hasMatch(value)) {
+          return "Please enter valid email";
+        }
+      },
+      onSaved: (String value) {
+        _email = value;
       },
     );
   }
 
   Widget _buildPasswordTextField() {
-    return TextField(
+    return TextFormField(
       decoration: InputDecoration(
-          labelText: 'Password', filled: true, fillColor: Colors.white),
-      onChanged: (String value) {
-        setState(() {
-          _password = value;
-        });
+        labelText: 'Password',
+        filled: true,
+        fillColor: Colors.white,
+      ),
+      validator: (String value) {
+        if(value.isEmpty) {
+          return "Password is required";
+        }
+      },
+      onSaved: (String value) {
+        _password = value;
       },
       obscureText: true,
     );
@@ -61,6 +77,10 @@ class AuthPageState extends State<AuthPage> {
   }
 
   void _submitForm() {
+    if (!_GpKey.currentState.validate()) {
+      return;
+    }
+    _GpKey.currentState.save();
     Navigator.pushReplacementNamed(context, '/products');
   }
 
@@ -78,27 +98,30 @@ class AuthPageState extends State<AuthPage> {
               image: _buildBackgroundImage(),
             ),
             padding: EdgeInsets.all(16.0),
-            child: Center(
-              child: SingleChildScrollView(
-                child: Container(
-                  width: targetWidth,
-                  child: Column(
-                    children: <Widget>[
-                      _buildEmailTextField(),
-                      SizedBox(
-                        height: 10.0,
-                      ),
-                      _buildPasswordTextField(),
-                      _buildAcceptTermsAndCondition(),
-                      SizedBox(
-                        height: 20.0,
-                      ),
-                      RaisedButton(
-                        child: Text('Login'),
-                        textColor: Colors.white,
-                        onPressed: _submitForm,
-                      )
-                    ],
+            child: Form(
+              key: _GpKey,
+              child: Center(
+                child: SingleChildScrollView(
+                  child: Container(
+                    width: targetWidth,
+                    child: Column(
+                      children: <Widget>[
+                        _buildEmailTextField(),
+                        SizedBox(
+                          height: 10.0,
+                        ),
+                        _buildPasswordTextField(),
+                        _buildAcceptTermsAndCondition(),
+                        SizedBox(
+                          height: 20.0,
+                        ),
+                        RaisedButton(
+                          child: Text('Login'),
+                          textColor: Colors.white,
+                          onPressed: _submitForm,
+                        )
+                      ],
+                    ),
                   ),
                 ),
               ),
