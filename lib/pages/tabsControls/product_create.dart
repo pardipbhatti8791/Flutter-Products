@@ -111,30 +111,35 @@ class _ProductCreatePageState extends State<ProductCreatePage> {
     final double targetWidth = deviceWidth > 550.0 ? 500.0 : deviceWidth * 0.95;
     final double targetPadding = deviceWidth - targetWidth;
     // TODO: implement build
-    return Container(
-      margin: EdgeInsets.all(10.0),
-      child: Form(
-        key: _formKey,
-        child: ListView(
-          padding: EdgeInsets.symmetric(horizontal: targetPadding / 2.0),
-          children: <Widget>[
-            _buildTextFeild(),
-            _buildDescriptionField(),
-            _buildPriceField(),
-            SwitchListTile(
-              value: true,
-              onChanged: (bool value) {},
-              title: Text('Accept Terms'),
-            ),
-            SizedBox(
-              height: 20.0,
-            ),
-            RaisedButton(
-              child: Text('Save'),
-              textColor: Colors.white,
-              onPressed: _submitForm,
-            ),
-          ],
+    return GestureDetector(
+      onTap: () {
+        FocusScope.of(context).requestFocus(FocusNode());
+      },
+      child: Container(
+        margin: EdgeInsets.all(10.0),
+        child: Form(
+          key: _formKey,
+          child: ListView(
+            padding: EdgeInsets.symmetric(horizontal: targetPadding / 2.0),
+            children: <Widget>[
+              _buildTextFeild(),
+              _buildDescriptionField(),
+              _buildPriceField(),
+              SwitchListTile(
+                value: true,
+                onChanged: (bool value) {},
+                title: Text('Accept Terms'),
+              ),
+              SizedBox(
+                height: 20.0,
+              ),
+              RaisedButton(
+                child: Text('Save'),
+                textColor: Colors.white,
+                onPressed: _submitForm,
+              ),
+            ],
+          ),
         ),
       ),
     );
