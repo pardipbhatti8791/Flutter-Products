@@ -40,8 +40,8 @@ class _ProductCreatePageState extends State<ProductCreatePage> {
         labelText: 'Product Title',
       ),
       validator: (String value) {
-        if(value.isEmpty) {
-          return 'Title is required';
+        if(value.isEmpty || value.length < 5 ) {
+          return 'Title is required and should be 5+ character';
         }
       },
       onSaved: (String value) {
@@ -58,8 +58,8 @@ class _ProductCreatePageState extends State<ProductCreatePage> {
         labelText: 'Product Description',
       ),
       validator: (String value) {
-        if(value.isEmpty) {
-          return 'Description is required';
+        if(value.isEmpty || value.length < 5 ) {
+          return 'Description is required and should be 10+ character';
         }
       },
       maxLines: 4,
@@ -77,8 +77,8 @@ class _ProductCreatePageState extends State<ProductCreatePage> {
         labelText: 'Product Price',
       ),
       validator: (String value) {
-        if(value.isEmpty) {
-          return 'Price is required';
+        if(value.isEmpty || !RegExp(r'^(?:[1-9]\d*|0)?(?:\.\d+)?$').hasMatch(value) ) {
+          return 'Price is required and should be number only';
         }
       },
       keyboardType: TextInputType.number,
