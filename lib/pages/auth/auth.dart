@@ -93,38 +93,41 @@ class AuthPageState extends State<AuthPage> {
         appBar: AppBar(
           title: Text('Please Authenticate'),
         ),
-        body: Container(
-            decoration: BoxDecoration(
-              image: _buildBackgroundImage(),
-            ),
-            padding: EdgeInsets.all(16.0),
-            child: Form(
-              key: _GpKey,
-              child: Center(
-                child: SingleChildScrollView(
-                  child: Container(
-                    width: targetWidth,
-                    child: Column(
-                      children: <Widget>[
-                        _buildEmailTextField(),
-                        SizedBox(
-                          height: 10.0,
-                        ),
-                        _buildPasswordTextField(),
-                        _buildAcceptTermsAndCondition(),
-                        SizedBox(
-                          height: 20.0,
-                        ),
-                        RaisedButton(
-                          child: Text('Login'),
-                          textColor: Colors.white,
-                          onPressed: _submitForm,
-                        )
-                      ],
+        body: GestureDetector(
+          onTap: () { FocusScope.of(context).requestFocus(FocusNode()); },
+          child: Container(
+              decoration: BoxDecoration(
+                image: _buildBackgroundImage(),
+              ),
+              padding: EdgeInsets.all(16.0),
+              child: Form(
+                key: _GpKey,
+                child: Center(
+                  child: SingleChildScrollView(
+                    child: Container(
+                      width: targetWidth,
+                      child: Column(
+                        children: <Widget>[
+                          _buildEmailTextField(),
+                          SizedBox(
+                            height: 10.0,
+                          ),
+                          _buildPasswordTextField(),
+                          _buildAcceptTermsAndCondition(),
+                          SizedBox(
+                            height: 20.0,
+                          ),
+                          RaisedButton(
+                            child: Text('Login'),
+                            textColor: Colors.white,
+                            onPressed: _submitForm,
+                          )
+                        ],
+                      ),
                     ),
                   ),
                 ),
-              ),
-            )));
+              )),
+        ));
   }
 }
