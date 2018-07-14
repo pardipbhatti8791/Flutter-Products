@@ -2,29 +2,58 @@ import 'package:flutter/material.dart';
 
 import 'product_edit.dart';
 
-class ProductListPage extends StatelessWidget {
-  final List<Map<String, dynamic>> products;
-  final Function updateProduct;
+import '../../models/product.dart';
 
-  ProductListPage(this.products, this.updateProduct);
+class ProductListPage extends StatelessWidget {
+  final List<Product> products;
+  final Function updateProduct;
+  final Function deleteProduct;
+
+  ProductListPage(this.products, this.updateProduct, this.deleteProduct);
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
     return ListView.builder(
       itemBuilder: (BuildContext context, int index) {
-        return ListTile(
-          leading: Image.asset(
-            'assets/food.jpg',
-            width: 50.0,
+        return Dismissible(
+          key: Key(products[index].title),
+          onDismissed: (DismissDirection direction) {
+            if (direction == DismissDirection.endToStart) {
+              deleteProduct(index);
+            } else if (direction == DismissDirection.startToEnd) {
+              print('start to end');
+            }
+          },
+          background: Container(
+            color: Colors.red,
           ),
-          title: Text(products[index]['title']),
-          trailing: IconButton(
-            icon: Icon(Icons.edit),
-            onPressed: () {
-              Navigator.of(context).push(MaterialPageRoute(builder: (BuildContext context) {
-                return ProductEditPage(product: products[index], updateProduct: updateProduct, productIndex: index,);
-              },),);
-            },
+          child: Column(
+            children: <Widget>[
+              ListTile(
+                leading: CircleAvatar(
+                  backgroundImage: AssetImage(products[index].image),
+                ),
+                title: Text(products[index].title),
+                subtitle: Text('\$${products[index].price.toString()}'),
+                trailing: IconButton(
+                  icon: Icon(Icons.edit),
+                  onPressed: () {
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (BuildContext context) {
+                          return ProductEditPage(
+                            product: products[index],
+                            updateProduct: updateProduct,
+                            productIndex: index,
+                          );
+                        },
+                      ),
+                    );
+                  },
+                ),
+              ),
+              Divider(),
+            ],
           ),
         );
       },
